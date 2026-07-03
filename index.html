@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Is It Good For The Jews?</title>
+<meta name="description" content="A daily survey of world events, weighed, measured, and possibly in need of therapy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f3e8d0;
+    --paper-deep:#e9dcc0;
+    --paper-card:#faf3e3;
+    --ink:#2b2014;
+    --ink-soft:#6f5d46;
+    --rule:#a08e72;
+    --bad:#a23e2c;
+    --mid:#c9a227;
+    --good:#56713c;
+    --gold:#b8923f;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+
+  body{
+    background-color:var(--paper);
+    background-image:
+      radial-gradient(ellipse at top, rgba(184,146,63,0.10), transparent 55%),
+      repeating-linear-gradient(0deg, rgba(43,32,20,0.025) 0px, rgba(43,32,20,0.025) 1px, transparent 1px, transparent 3px);
+    color:var(--ink);
+    font-family:'Lora', Georgia, serif;
+    line-height:1.55;
+    padding-bottom:70px;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{ max-width:880px; margin:0 auto; padding:28px 20px 0; }
+
+  /* ---------- MASTHEAD ---------- */
+  .masthead{ text-align:center; padding-top:10px; }
+  .masthead .stars{
+    display:flex; align-items:center; justify-content:center; gap:18px;
+    color:var(--gold); font-size:1.6rem; letter-spacing:0.4em;
+    margin-bottom:6px;
+  }
+  .masthead h1{
+    font-family:'Frank Ruhl Libre', serif;
+    font-weight:900;
+    font-size:clamp(2.4rem, 8vw, 4.4rem);
+    margin:0;
+    letter-spacing:0.02em;
+    line-height:1.05;
+    text-shadow: 1px 1px 0 rgba(43,32,20,0.08);
+  }
+  .masthead .subhead{
+    font-family:'Lora', serif;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:0.95rem;
+    margin:8px 0 14px;
+  }
+  .rule{
+    border:none; border-top:3px double var(--rule); margin:0;
+  }
+  .rule.thin{ border-top:1px solid var(--rule); }
+  .dateline{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'Special Elite', monospace;
+    font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink-soft);
+    padding:8px 2px;
+  }
+
+  /* ---------- ACTION BAR ---------- */
+  .action-bar{ text-align:center; padding:26px 0 6px; }
+  .press-btn{
+    font-family:'Frank Ruhl Libre', serif;
+    font-weight:700;
+    font-size:1.05rem;
+    letter-spacing:0.04em;
+    background:var(--ink);
+    color:var(--paper);
+    border:2px solid var(--ink);
+    padding:14px 30px;
+    cursor:pointer;
+    border-radius:2px;
+    transition:transform 0.12s ease, background 0.2s ease;
+    box-shadow:3px 3px 0 var(--gold);
+  }
+  .press-btn:hover{ background:#46341f; }
+  .press-btn:active{ transform:translate(2px,2px); box-shadow:1px 1px 0 var(--gold); }
+  .press-btn:disabled{ opacity:0.6; cursor:wait; }
+  .meta-line{
+    font-family:'Special Elite', monospace;
+    font-size:0.7rem; color:var(--ink-soft);
+    margin-top:10px; letter-spacing:0.05em;
+  }
+  .error-line{
+    font-family:'Special Elite', monospace;
+    font-size:0.78rem; color:var(--bad);
+    margin-top:10px; max-width:560px; margin-left:auto; margin-right:auto;
+  }
+
+  /* ---------- OVERALL VERDICT ---------- */
+  .section-label{
+    font-family:'Frank Ruhl Libre', serif;
+    font-weight:700;
+    font-size:0.78rem;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    text-align:center;
+    color:var(--ink-soft);
+    margin:34px 0 4px;
+  }
+  .overall{
+    text-align:center;
+    padding:6px 0 18px;
+  }
+
+  /* ---------- SHARE / MEME CARDS ---------- */
+  .meme-img{
+    display:block;
+    width:100%;
+    max-width:320px;
+    margin:10px auto 4px;
+    border:1px solid var(--rule);
+    box-shadow:2px 2px 0 rgba(43,32,20,0.08);
+  }
+  .meme-img--big{
+    max-width:380px;
+  }
+  .save-hint{
+    font-family:'Special Elite', monospace;
+    font-size:0.62rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--ink-soft);
+    text-align:center;
+    margin:0 0 4px;
+  }
+
+  /* ---------- CUSTOM RATING ---------- */
+  .custom-rate{
+    max-width:560px;
+    margin:0 auto;
+    text-align:center;
+    padding-bottom:10px;
+  }
+  .custom-intro{
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:0.92rem;
+    margin:0 0 12px;
+  }
+  .custom-input{
+    width:100%;
+    min-height:80px;
+    padding:12px;
+    font-family:'Lora', serif;
+    font-size:0.95rem;
+    color:var(--ink);
+    background:var(--paper-card);
+    border:1px solid var(--rule);
+    resize:vertical;
+    box-sizing:border-box;
+    margin-bottom:12px;
+  }
+  .custom-input:focus{
+    outline:2px solid var(--gold);
+    outline-offset:1px;
+  }
+  #customResult{
+    margin-top:18px;
+    display:flex;
+    justify-content:center;
+  }
+  #customResult .story-card{
+    max-width:340px;
+    width:100%;
+  }
+
+  /* ---------- STORIES GRID ---------- */
+  .stories-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+    gap:18px;
+    margin-top:14px;
+  }
+  .story-card{
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    margin-top:46px;
+    text-align:center;
+    font-family:'Special Elite', monospace;
+    font-size:0.68rem;
+    color:var(--ink-soft);
+    letter-spacing:0.05em;
+    line-height:1.8;
+  }
+  footer .footer-stars{ color:var(--gold); letter-spacing:0.5em; font-size:1rem; margin-bottom:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="stars">✡ &nbsp; ✡ &nbsp; ✡</div>
+    <h1>Is It Good For The Jews?</h1>
+    <div class="subhead">A Daily Survey of World Events &mdash; Analyzed, Overanalyzed, and Possibly In Need Of Therapy</div>
+  </div>
+
+  <hr class="rule">
+  <div class="dateline">
+    <span id="todayDate">&mdash;</span>
+    <span id="volNo">Vol. I, No. &mdash;</span>
+    <span>Price: 5 Agorot</span>
+  </div>
+  <hr class="rule thin">
+
+  <div class="action-bar">
+    <button class="press-btn" id="fetchBtn">☞ Stop the Presses — Compose Today's Edition</button>
+    <div class="meta-line" id="metaLine">No edition composed yet. The presses await your command.</div>
+    <div class="error-line" id="errorLine" style="display:none;"></div>
+  </div>
+
+  <div id="overallSection" style="display:none;">
+    <div class="section-label">Today's Overall Verdict</div>
+    <div class="overall">
+      <div id="overallMeme"></div>
+    </div>
+  </div>
+
+  <div id="storiesSection" style="display:none;">
+    <div class="section-label">Also In This Edition</div>
+    <div class="stories-grid" id="storiesGrid"></div>
+  </div>
+
+  <hr class="rule thin" style="margin-top:34px;">
+
+  <div class="custom-rate">
+    <div class="section-label" style="margin-top:24px;">Submit Your Own</div>
+    <p class="custom-intro">Got a headline, a link, or just heard about something today? Paste it in and we'll run it through the meter.</p>
+    <textarea id="customInput" class="custom-input" maxlength="500" placeholder="e.g. &quot;Local man wins lottery, immediately calls his mother to complain about the taxes&quot; — or paste a news URL"></textarea>
+    <button class="press-btn" id="customBtn">☞ Run It Through The Meter</button>
+    <div class="meta-line" id="customMeta"></div>
+    <div class="error-line" id="customErrorLine" style="display:none;"></div>
+    <div id="customResult"></div>
+  </div>
+
+  <footer>
+    <div class="footer-stars">✡ ✡ ✡</div>
+    Ratings generated by an algorithm with strong opinions and no rabbinical training.<br>
+    For entertainment purposes only. No minyan was consulted.<br>
+    &copy; <span id="yearNow"></span> Is It Good For The Jews? &mdash; All rights reversed.
+  </footer>
+
+</div>
+
+<script>
+const SITE_URL = "https://isitgoodforthejews.com";
+const API_ENDPOINT = "/api/edition";
+
+function todayKey(){
+  return new Date().toISOString().slice(0,10);
+}
+
+function setupDateline(){
+  const now = new Date();
+  document.getElementById('todayDate').textContent = now.toLocaleDateString(undefined, { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  document.getElementById('yearNow').textContent = now.getFullYear();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now - start) / 86400000);
+  document.getElementById('volNo').textContent = `Vol. I, No. ${dayOfYear}`;
+}
+
+// ---------- Shareable card image (the only rendering of each story) ----------
+function drawGaugeOnCanvas(ctx, cx, cy, r, rating){
+  // Arc
+  const grad = ctx.createLinearGradient(cx - r, cy, cx + r, cy);
+  grad.addColorStop(0, '#a23e2c');
+  grad.addColorStop(0.5, '#c9a227');
+  grad.addColorStop(1, '#56713c');
+  ctx.lineWidth = r * 0.16;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = grad;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, Math.PI, 2 * Math.PI);
+  ctx.stroke();
+
+  // Needle
+  const clamped = Math.max(0, Math.min(100, Number(rating) || 0));
+  const angle = Math.PI + (clamped / 100) * Math.PI;
+  const nx = cx + (r * 0.78) * Math.cos(angle);
+  const ny = cy + (r * 0.78) * Math.sin(angle);
+  ctx.strokeStyle = '#2b2014';
+  ctx.lineWidth = r * 0.045;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.lineTo(nx, ny);
+  ctx.stroke();
+  ctx.fillStyle = '#2b2014';
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 0.07, 0, 2 * Math.PI);
+  ctx.fill();
+
+  // Labels
+  ctx.fillStyle = '#6f5d46';
+  ctx.font = `${Math.round(r * 0.085)}px 'Special Elite', monospace`;
+  ctx.textAlign = 'left';
+  ctx.fillText('OY VEY', cx - r, cy + r * 0.18);
+  ctx.textAlign = 'right';
+  ctx.fillText('MAZEL TOV', cx + r, cy + r * 0.18);
+}
+
+function wrapLines(ctx, text, maxWidth){
+  const words = String(text || '').split(' ');
+  let line = '';
+  const lines = [];
+  for(let n = 0; n < words.length; n++){
+    const testLine = line + words[n] + ' ';
+    if(ctx.measureText(testLine).width > maxWidth && n > 0){
+      lines.push(line.trim());
+      line = words[n] + ' ';
+    } else {
+      line = testLine;
+    }
+  }
+  lines.push(line.trim());
+  return lines;
+}
+
+// Builds a single, self-contained card image (eyebrow, headline, gauge,
+// verdict, commentary, kicker). Layout height is computed dynamically from
+// the actual wrapped text so nothing ever overlaps, regardless of how long
+// the headline or commentary is.
+async function buildShareCard(item){
+  await document.fonts.ready;
+
+  const W = 1080;
+  const PAD = 64;
+  const CW = W - PAD * 2;
+  const MAX_H = 2400;
+
+  const HEADLINE_FONT = `bold 50px 'Frank Ruhl Libre', serif`;
+  const HEADLINE_LH = 60;
+  const VERDICT_FONT = `bold 60px 'Frank Ruhl Libre', serif`;
+  const COMMENTARY_FONT = `italic 36px 'Lora', serif`;
+  const COMMENTARY_LH = 48;
+  const KICKER_FONT = `600 34px 'Lora', serif`;
+  const KICKER_LH = 46;
+  const SOURCE_FONT = `28px 'Special Elite', monospace`;
+  const BRAND_FONT = `bold 36px 'Frank Ruhl Libre', serif`;
+  const SCORE_FONT = `28px 'Special Elite', monospace`;
+  const GAUGE_R = 230;
+
+  // Draw onto a generously-tall canvas, then crop to the actual content
+  // height. This keeps drawing and layout in lock-step (no separate
+  // measure/draw passes that could drift out of sync).
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = MAX_H;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#f3e8d0';
+  ctx.fillRect(0, 0, W, MAX_H);
+  ctx.textAlign = 'center';
+
+  let y = PAD;
+
+  // Brand line
+  ctx.fillStyle = '#b8923f';
+  ctx.font = BRAND_FONT;
+  y += 44;
+  ctx.fillText('✡ Is It Good For The Jews? ✡', W / 2, y);
+  y += 50;
+
+  if(!item.isOverall){
+    // Source eyebrow
+    ctx.fillStyle = '#6f5d46';
+    ctx.font = SOURCE_FONT;
+    y += 30;
+    ctx.fillText((item.source || 'Wire Report').toUpperCase(), W / 2, y);
+    y += 50;
+
+    // Headline
+    ctx.fillStyle = '#2b2014';
+    ctx.font = HEADLINE_FONT;
+    const headlineLines = wrapLines(ctx, item.headline, CW);
+    headlineLines.forEach((l, i) => ctx.fillText(l, W / 2, y + i * HEADLINE_LH));
+    y += headlineLines.length * HEADLINE_LH;
+    y += 30;
+  } else {
+    y += 10;
+  }
+
+  // Gauge
+  const gaugeCenterY = y + GAUGE_R;
+  drawGaugeOnCanvas(ctx, W / 2, gaugeCenterY, GAUGE_R, item.rating);
+  ctx.textAlign = 'center';
+  y = gaugeCenterY + 80;
+
+  // Verdict
+  ctx.fillStyle = '#2b2014';
+  ctx.font = VERDICT_FONT;
+  y += 50;
+  const verdictLines = wrapLines(ctx, item.verdict, CW);
+  verdictLines.forEach((l, i) => ctx.fillText(l, W / 2, y + i * 64));
+  y += (verdictLines.length - 1) * 64;
+
+  // Score
+  ctx.fillStyle = '#6f5d46';
+  ctx.font = SCORE_FONT;
+  y += 44;
+  ctx.fillText(`SCORE: ${item.rating} / 100`, W / 2, y);
+  y += 54;
+
+  // Commentary
+  ctx.fillStyle = '#6f5d46';
+  ctx.font = COMMENTARY_FONT;
+  const commentaryLines = wrapLines(ctx, item.commentary, CW);
+  commentaryLines.forEach((l, i) => ctx.fillText(l, W / 2, y + i * COMMENTARY_LH));
+  y += commentaryLines.length * COMMENTARY_LH;
+
+  // Kicker
+  if(item.kicker){
+    y += 18;
+    ctx.fillStyle = '#2b2014';
+    ctx.font = KICKER_FONT;
+    const kickerLines = wrapLines(ctx, item.kicker, CW);
+    kickerLines.forEach((l, i) => ctx.fillText(l, W / 2, y + i * KICKER_LH));
+    y += kickerLines.length * KICKER_LH;
+  }
+
+  // Footer
+  y += 56;
+  ctx.fillStyle = '#6f5d46';
+  ctx.font = `22px 'Special Elite', monospace`;
+  ctx.fillText('isitgoodforthejews.com', W / 2, y);
+  y += PAD - 10;
+
+  const finalH = Math.min(Math.round(y), MAX_H);
+
+  const final = document.createElement('canvas');
+  final.width = W;
+  final.height = finalH;
+  const fctx = final.getContext('2d');
+  fctx.drawImage(canvas, 0, 0, W, finalH, 0, 0, W, finalH);
+  fctx.strokeStyle = '#a08e72';
+  fctx.lineWidth = 4;
+  fctx.strokeRect(16, 16, W - 32, finalH - 32);
+
+  return final.toDataURL('image/png');
+}
+
+async function createStoryCardElement(story){
+  const card = document.createElement('div');
+  card.className = 'story-card';
+
+  const dataUrl = await buildShareCard({
+    headline: story.headline,
+    source: story.source,
+    verdict: story.verdict,
+    rating: story.rating,
+    commentary: story.commentary,
+    kicker: story.kicker || '',
+    isOverall: false
+  });
+  const img = document.createElement('img');
+  img.className = 'meme-img';
+  img.alt = `${story.headline} — ${story.verdict}`;
+  img.src = dataUrl;
+  card.appendChild(img);
+  const hint = document.createElement('div');
+  hint.className = 'save-hint';
+  hint.textContent = 'Right-click (or long-press) to save & share';
+  card.appendChild(hint);
+
+  return card;
+}
+
+async function renderEdition(data){
+  document.getElementById('overallSection').style.display = '';
+  document.getElementById('storiesSection').style.display = '';
+
+  const overallMemeWrap = document.getElementById('overallMeme');
+  overallMemeWrap.innerHTML = '';
+  const overallDataUrl = await buildShareCard({
+    verdict: data.overall.verdict,
+    rating: data.overall.rating,
+    commentary: data.overall.commentary,
+    kicker: data.overall.kicker || '',
+    isOverall: true
+  });
+  const overallImg = document.createElement('img');
+  overallImg.className = 'meme-img meme-img--big';
+  overallImg.alt = `Today's overall verdict: ${data.overall.verdict}`;
+  overallImg.src = overallDataUrl;
+  overallMemeWrap.appendChild(overallImg);
+  const overallHint = document.createElement('div');
+  overallHint.className = 'save-hint';
+  overallHint.textContent = 'Right-click (or long-press) to save & share';
+  overallMemeWrap.appendChild(overallHint);
+
+  const grid = document.getElementById('storiesGrid');
+  grid.innerHTML = '';
+  for(const story of data.stories){
+    const card = await createStoryCardElement(story);
+    grid.appendChild(card);
+  }
+}
+
+// Fallback prompt used only when the deployed backend (/api/edition) isn't
+// reachable — e.g. while previewing this file directly. Lets you tweak and
+// test live without a deployment. The deployed site uses api/edition.js
+// instead, which keeps the API key server-side.
+// Used for the "Submit Your Own" feature when /api/rate isn't reachable
+// (preview only — the deployed site uses api/rate.js, which keeps the API
+// key server-side).
+const SINGLE_ITEM_SYSTEM_PROMPT = `You are the wry, deadpan editor-in-chief of a satirical newspaper called "Is It Good For The Jews?"
+
+Your sense of humor draws on classic Jewish comic traditions — the kvetch as art form, self-deprecation, comic mismatch of scale, rhetorical questions that answer themselves, Talmudic two-sided over-analysis, shaggy-dog landings, precise Yiddish vocabulary (chutzpah, tsuris, kvell, farkakte, meshugas, nu, feh, oy — pick the right one, don't just sprinkle "oy" everywhere), historical telescoping, and a Borscht Belt topper/kicker line after the main joke.
+
+A reader has submitted a headline, a URL, or a description of something that happened. Your job:
+1. If it looks like a URL, do ONE web search to find out what the story is actually about. If it's a headline or description, you may do ONE web search ONLY if it would meaningfully sharpen the joke (e.g. you don't recognize a name or event) — otherwise skip searching entirely and just write the rating.
+2. Assign a "Good For The Jews" rating from 0 (catastrophic, oy vey) to 100 (wonderful, mazel tov), with 50 being neutral or mixed.
+3. Write a short, clean version of the headline (max ~12 words) summarizing what the reader submitted.
+4. Give a punchy 2-4 word verdict label (Yiddish/Jewish exclamation style, or a self-answering rhetorical question).
+5. Write ONE commentary sentence (max 22 words) using one of the techniques above. Funny, self-aware, never mean-spirited, never punching down, no offensive stereotypes.
+6. Write ONE kicker line (max 14 words) — a Borscht Belt topper that follows the commentary and one-ups it.
+
+Respond with ONLY a raw JSON object — no markdown fences, no commentary before or after — in EXACTLY this shape:
+{"headline":"<short headline>","source":"Reader Submission","rating":<0-100 integer>,"verdict":"<short label>","commentary":"<one sentence>","kicker":"<short topper line>"}`;
+
+const FALLBACK_SYSTEM_PROMPT = `You are the wry, deadpan editor-in-chief of a satirical newspaper called "Is It Good For The Jews?"
+
+Your sense of humor draws on classic Jewish comic traditions. Vary which of these you reach for from story to story, so the edition doesn't feel formulaic:
+
+- THE KVETCH AS ART FORM: complain with relish and craft, even (especially) about good news. Find the cloud in the silver lining.
+- SELF-DEPRECATION: occasionally mock the absurdity of the premise itself — a machine deciding what's "good for the Jews" — including jokes at your own expense.
+- COMIC MISMATCH OF SCALE: either catastrophize a trivial story with total seriousness, or greet a genuinely big story with weary, "we've seen worse" resignation. The gap between the news and the reaction is the joke.
+- THE RHETORICAL QUESTION THAT ANSWERS ITSELF: sometimes deliver the verdict as a question rather than a statement.
+- TALMUDIC OVER-ANALYSIS: for at least one story, do a brief two-sided "on the one hand... but on the other hand... however, others would argue..." treatment of something trivial, with mock gravity.
+- THE SHAGGY-DOG LANDING: build up like there's a big point coming, then land on something flat and plain.
+- PRECISE YIDDISH VOCABULARY: use specific words for specific feelings (chutzpah, tsuris, kvell, farkakte, meshugas, nu, feh, oy) — pick the RIGHT one for the situation rather than sprinkling "oy" everywhere.
+- HISTORICAL TELESCOPING: casually invoke thousands of years of Jewish history as context for a minor modern inconvenience.
+- THE BORSCHT BELT TOPPER: after the main joke, land one extra short deadpan line that one-ups it — a kicker, like a comedian's tag after the punchline.
+
+Your job, in this exact order:
+1. Do ONE web search to find 5 significant, varied news stories from TODAY (mix of world affairs, politics, business, tech, culture, sports — they do NOT need to be Jewish-related, that IS the joke: literally everything in the news gets run through this lens).
+2. Immediately stop searching and write your output. Do not search again.
+
+For each of the 5 stories, assign a "Good For The Jews" rating from 0 (catastrophic, oy vey) to 100 (wonderful, mazel tov), with 50 being neutral or mixed. Give each:
+- a punchy 2-4 word verdict label (Yiddish/Jewish exclamation style, or a self-answering rhetorical question)
+- ONE commentary sentence (max 22 words) using one of the techniques above
+- ONE kicker line (max 14 words) — a Borscht Belt topper/tag that follows the commentary and one-ups it
+
+Keep it funny, self-aware, never mean-spirited, never punching down, no offensive stereotypes.
+
+Also produce one OVERALL rating (0-100) summarizing today's general mood across all stories, with its own verdict label, commentary, and kicker in the same voice.
+
+Respond with ONLY a raw JSON object — no markdown fences, no commentary before or after — in EXACTLY this shape:
+{"date":"<today's date, human readable>","overall":{"rating":<0-100 integer>,"verdict":"<short label>","commentary":"<one sentence>","kicker":"<short topper line>"},"stories":[{"headline":"<headline>","source":"<outlet name>","rating":<0-100 integer>,"verdict":"<short label>","commentary":"<one sentence>","kicker":"<short topper line>"}]}`;
+
+async function getEditionViaBackend(){
+  const response = await fetch(API_ENDPOINT, { method: 'GET' });
+  const parsed = await response.json();
+  if(!response.ok || parsed.error){
+    throw new Error(parsed.error || `Server returned ${response.status}`);
+  }
+  return parsed;
+}
+
+async function getEditionDirect(){
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 1500,
+      system: FALLBACK_SYSTEM_PROMPT,
+      messages: [
+        { role: "user", content: "Search for today's major news headlines and produce today's edition JSON now. Remember: ONE search only, then output the JSON." }
+      ],
+      tools: [ { type: "web_search_20250305", name: "web_search" } ]
+    })
+  });
+  const data = await response.json();
+  const textBlocks = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n');
+  const start = textBlocks.indexOf('{');
+  const end = textBlocks.lastIndexOf('}');
+  if(start === -1 || end === -1) throw new Error('No JSON found in response');
+  return JSON.parse(textBlocks.slice(start, end + 1));
+}
+
+async function fetchEdition(){
+  const btn = document.getElementById('fetchBtn');
+  const meta = document.getElementById('metaLine');
+  const errLine = document.getElementById('errorLine');
+  errLine.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = "☞ Composing today's edition…";
+  meta.textContent = 'Sending the cub reporter out for headlines. This can take up to a minute.';
+
+  try{
+    let parsed;
+    try{
+      parsed = await getEditionViaBackend();
+    }catch(backendErr){
+      parsed = await getEditionDirect();
+    }
+
+    await renderEdition(parsed);
+    meta.textContent = `Edition composed at ${new Date().toLocaleTimeString()}. Dateline: ${parsed.date || ''}`;
+
+    try{
+      localStorage.setItem('edition:' + todayKey(), JSON.stringify(parsed));
+    }catch(e){ /* storage best-effort */ }
+
+  }catch(err){
+    errLine.style.display = '';
+    errLine.textContent = 'The presses jammed: ' + err.message + '. Try again in a moment.';
+    meta.textContent = 'No edition composed yet.';
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "☞ Stop the Presses — Compose Today's Edition";
+  }
+}
+
+document.getElementById('fetchBtn').addEventListener('click', fetchEdition);
+
+async function getCustomRatingViaBackend(input){
+  const response = await fetch('/api/rate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ input })
+  });
+  const parsed = await response.json();
+  if(!response.ok || parsed.error){
+    throw new Error(parsed.error || `Server returned ${response.status}`);
+  }
+  return parsed;
+}
+
+async function getCustomRatingDirect(input){
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 600,
+      system: SINGLE_ITEM_SYSTEM_PROMPT,
+      messages: [
+        { role: "user", content: `Here is the reader's submission: ${input}` }
+      ],
+      tools: [ { type: "web_search_20250305", name: "web_search" } ]
+    })
+  });
+  const data = await response.json();
+  const textBlocks = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('\n');
+  const start = textBlocks.indexOf('{');
+  const end = textBlocks.lastIndexOf('}');
+  if(start === -1 || end === -1) throw new Error('No JSON found in response');
+  return JSON.parse(textBlocks.slice(start, end + 1));
+}
+
+async function submitCustomRating(){
+  const input = document.getElementById('customInput').value.trim();
+  const btn = document.getElementById('customBtn');
+  const meta = document.getElementById('customMeta');
+  const errLine = document.getElementById('customErrorLine');
+  const result = document.getElementById('customResult');
+
+  errLine.style.display = 'none';
+
+  if(!input){
+    errLine.style.display = '';
+    errLine.textContent = "You'll need to paste something first — a headline, a link, or a sentence about what happened.";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '☞ Consulting the sages…';
+  meta.textContent = 'Weighing it on the scales of justice (and comedy). This can take a moment.';
+  result.innerHTML = '';
+
+  try{
+    let story;
+    try{
+      story = await getCustomRatingViaBackend(input);
+    }catch(backendErr){
+      story = await getCustomRatingDirect(input);
+    }
+
+    const card = await createStoryCardElement(story);
+    result.appendChild(card);
+    meta.textContent = 'Verdict reached. Right-click the card to save it.';
+  }catch(err){
+    errLine.style.display = '';
+    errLine.textContent = 'Could not reach a verdict: ' + err.message + '. Try again in a moment.';
+    meta.textContent = '';
+  }finally{
+    btn.disabled = false;
+    btn.textContent = '☞ Run It Through The Meter';
+  }
+}
+
+document.getElementById('customBtn').addEventListener('click', submitCustomRating);
+
+(async function init(){
+  setupDateline();
+  try{
+    const cached = localStorage.getItem('edition:' + todayKey());
+    if(cached){
+      const parsed = JSON.parse(cached);
+      await renderEdition(parsed);
+      document.getElementById('metaLine').textContent = `Showing today's earlier edition. Dateline: ${parsed.date || ''}. Click above to re-run.`;
+    }
+  }catch(e){ /* no cached edition, that's fine */ }
+})();
+</script>
+</body>
+</html>

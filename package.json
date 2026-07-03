@@ -1,0 +1,9 @@
+{
+  "name": "is-it-good-for-the-jews",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A daily, AI-rated, satirical newspaper that runs the day's news through the Good For The Jews-O-Meter.",
+  "engines": {
+    "node": ">=18"
+  }
+}
