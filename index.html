@@ -568,7 +568,7 @@ Respond with ONLY a raw JSON object — no markdown fences, no commentary before
 {"date":"<today's date, human readable>","overall":{"rating":<0-100 integer>,"verdict":"<short label>","commentary":"<one sentence>","kicker":"<short topper line>"},"stories":[{"headline":"<headline>","source":"<outlet name>","rating":<0-100 integer>,"verdict":"<short label>","commentary":"<one sentence>","kicker":"<short topper line>"}]}`;
 
 async function getEditionViaBackend(){
-  const response = await fetch(API_ENDPOINT, { method: 'GET' });
+  const response = await fetch(API_ENDPOINT + '?t=' + Date.now(), { method: 'GET', cache: 'no-store' });
   const parsed = await response.json();
   if(!response.ok || parsed.error){
     throw new Error(parsed.error || `Server returned ${response.status}`);

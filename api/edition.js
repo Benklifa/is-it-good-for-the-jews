@@ -23,6 +23,13 @@ Your job, in this exact order:
 1. Do ONE web search to find 5 significant, varied news stories from TODAY (mix of world affairs, politics, business, tech, culture, sports — they do NOT need to be Jewish-related, that IS the joke: literally everything in the news gets run through this lens).
 2. Immediately stop searching and write your output. Do not search again.
 
+CRITICAL — VARIETY ACROSS RUNS: This edition is generated many times per day, and each run MUST feel genuinely different, not the same five stories reworded. To achieve this:
+- The user message will specify which news CATEGORIES to emphasize this run and may suggest specific search terms — follow that emphasis when choosing your single search query and when selecting stories.
+- Deliberately AVOID the "obvious top 5" that every news aggregator leads with. When multiple qualifying stories exist, prefer different specific events, angles, regions, and beats than the single biggest global headlines.
+- Actively ROTATE between big global headlines and smaller, local, regional, or offbeat stories. At least 2 of your 5 should be lesser-covered or human-interest / niche stories rather than the day's dominant headlines.
+- Pick DIFFERENT specific events when multiple qualify — do not simply reword the same shooting, wildfire, or geopolitical story that a "typical top 5" would surface. Vary the jokes, verdict labels, and meter scores too.
+- If you find yourself about to pick the single most-covered story of the day, ask whether a fresher, less-obvious qualifying story would serve the edition better — usually it will.
+
 For each of the 5 stories, assign a "Good For The Jews" rating from 0 (catastrophic, oy vey) to 100 (wonderful, mazel tov), with 50 being neutral or mixed. Give each:
 - a punchy 2-4 word verdict label (Yiddish/Jewish exclamation style, or a self-answering rhetorical question)
 - ONE commentary sentence (max 22 words) using one of the techniques above
@@ -56,6 +63,43 @@ export default async function handler(req, res) {
     });
   }
 
+  // --- Per-run variety: rotate which categories get emphasized and suggest
+  // varied search terms, so the model's single web search returns different
+  // results on repeated clicks within the same day. ---
+  const CATEGORIES = [
+    { name: 'US news', terms: ['US news today', 'American politics today', 'US economy inflation today'] },
+    { name: 'world news', terms: ['world news today', 'Europe news today', 'international headlines today'] },
+    { name: 'business & economy', terms: ['business news today', 'economy inflation today', 'markets news today'] },
+    { name: 'tech & science', terms: ['technology news today', 'science breakthrough today', 'AI news today'] },
+    { name: 'culture & entertainment', terms: ['culture news today', 'entertainment news today', 'film music news today'] },
+    { name: 'sports', terms: ['sports news today', 'sports headlines today', 'sports upset today'] },
+    { name: 'weather & disasters', terms: ['extreme weather news today', 'natural disaster today', 'heat wave storm today'] },
+    { name: 'offbeat & local', terms: ['offbeat news today', 'weird local news today', 'human interest news today'] },
+    { name: 'health & lifestyle', terms: ['health news today', 'lifestyle news today', 'wellness news today'] },
+    { name: 'Jewish & Israel news', terms: ['Jewish community news today', 'Israel news today', 'Jewish culture news today'] }
+  ];
+
+  function pick(arr, n) {
+    const copy = arr.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy.slice(0, n);
+  }
+
+  const emphasis = pick(CATEGORIES, 4);
+  const emphasisNames = emphasis.map((c) => c.name).join(', ');
+  const suggestedTerms = emphasis.map((c) => c.terms[Math.floor(Math.random() * c.terms.length)]).join('  |  ');
+  const seed = Math.random().toString(36).slice(2, 8);
+
+  const userMessage =
+    `Produce today's edition JSON now. ONE search only, then output the JSON.\n\n` +
+    `For THIS run, emphasize these news categories (weight them roughly in this order): ${emphasisNames}.\n` +
+    `Suggested search angles you may draw from (pick or adapt one for your single search): ${suggestedTerms}.\n` +
+    `Variety token (ignore its meaning, just let it push you toward a different-than-usual selection): ${seed}.\n` +
+    `Remember: avoid the obvious top-5 headlines, and rotate in at least two lesser-covered/offbeat/local stories.`;
+
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -71,7 +115,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: 'user',
-            content: "Search for today's major news headlines and produce today's edition JSON now. Remember: ONE search only, then output the JSON."
+            content: userMessage
           }
         ],
         tools: [{ type: 'web_search_20250305', name: 'web_search' }]
@@ -100,9 +144,8 @@ export default async function handler(req, res) {
 
     const parsed = JSON.parse(textBlocks.slice(start, end + 1));
 
-    // Cache today's edition at the edge / browser for a few hours so repeated
-    // visits don't burn an API call each time.
-    res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=86400');
+    // No caching: each click should produce a fresh edition.
+    res.setHeader('Cache-Control', 'no-store, max-age=0');
 
     return res.status(200).json(parsed);
   } catch (err) {
